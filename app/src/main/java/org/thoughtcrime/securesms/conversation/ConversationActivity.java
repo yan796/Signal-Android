@@ -995,6 +995,17 @@ public class ConversationActivity extends PassphraseRequiredActivity
       }
     });
 
+    if (recipient != null) {
+      long expiresIn = recipient.get().getExpireMessages() * 1000L;
+      if (expiresIn <= 0) {
+        if (!TextSecurePreferences.isScreenSecurityEnabled(this)) {
+          getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        }
+      } else {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+      }
+    }
+
     super.onCreateOptionsMenu(menu);
     return true;
   }
